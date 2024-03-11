@@ -1,0 +1,21 @@
+{{- if (eq (.Site.Params.disableComments | default false) false) -}}
+  {{- if (eq (.Params.disableComments | default false) false) -}}
+  <p id="comments-note">Comments powered by <a href="https://giscus.app/">Giscus</a></p>
+    <script src="https://giscus.app/client.js"
+        data-repo="mambusskruj/mambusskruj.github.io"
+        data-repo-id="R_kgDOLe2MHg"
+        data-category="General"
+        data-category-id="DIC_kwDOLe2MHs4Cd5X0"
+        data-mapping="og:title"
+        data-strict="0"
+        data-reactions-enabled="0"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+    </script>
+  {{- end -}}
+{{- end -}}

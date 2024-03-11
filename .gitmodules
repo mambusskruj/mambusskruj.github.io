@@ -1,9 +1,0 @@
-[submodule "themes/xmin"]
-	path = themes/xmin
-	url = https://github.com/yihui/hugo-xmin.git
-[submodule "themes/hugo-bearblog"]
-	path = themes/hugo-bearblog
-	url = https://github.com/janraasch/hugo-bearblog.git
-[submodule "themes/black-and-light"]
-	path = themes/black-and-light
-	url = https://github.com/davidhampgonsalves/hugo-black-and-light-theme.git
