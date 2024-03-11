@@ -203,7 +203,7 @@ snippet :: Alternate definition list
 	  - $0
 ```
 
-It's not much, but have everything I need and doesn't overfill my autocompletion pop-up with suggestions.
+It's not much, but I have everything I need. Additionally, the small amount of snippets doesn't overfill the autocompletion pop-up with suggestions.
 
 ## Render images in editor
 
