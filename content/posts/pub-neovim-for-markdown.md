@@ -98,19 +98,19 @@ Inability to add a new word to the dictionary bothered me. So I decided to glue 
 ```
 local spell_words = {}
 for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
-	table.insert(spell_words, word)
+    table.insert(spell_words, word)
 end
                                                                                        
 lsp_config.ltex.setup({
-	settings = {
-		ltex = {
-			language = "en-US",
-			enabled = true,
-			dictionary = {
-				["en-US"] = spell_words,
-			},
-		},
-	},
+   settings = {
+      ltex = {
+         language = "en-US",
+         enabled = true,
+         dictionary = {
+            ["en-US"] = spell_words,
+        },
+      },
+   },
 })
 ```
 
