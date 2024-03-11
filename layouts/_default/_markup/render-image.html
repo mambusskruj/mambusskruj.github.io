@@ -32,6 +32,7 @@
                 src="{{ $image.RelPermalink }}"
                 alt="{{ $.PlainText }}"
                 title="{{ $.Title }}"
+                loading="lazy"
                 {{- if gt (len $srcset) 0 -}}
                     {{- (printf " srcset=\"%s\"" (delimit $srcset ", ")) | safeHTMLAttr -}}
                     {{- (printf " sizes=\"%s\"" (delimit $sizestag ", ")) | safeHTMLAttr -}}
