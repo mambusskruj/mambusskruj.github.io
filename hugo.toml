@@ -1,0 +1,30 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Home'
+languagecode = "en"
+# theme = 'xmin'
+# theme = 'hugo-bearblog'
+theme = 'black-and-light'
+
+pygmentsstyle       = "tango"
+pygmentscodefences  = true
+
+[module]
+[[module.mounts]]
+    source = 'content'
+    target = 'content'
+
+
+[params]
+  sitename = "Home"
+  disableWebFonts = true
+  dateFormat = "Jan 2006"
+
+
+[[menu.main]]
+  name = "HOME"
+  url  = "/"
+
+# [[menu.main]]
+#     name = "INFO"
+#     url  = "/about/"

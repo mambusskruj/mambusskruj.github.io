@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="">
+
+    
+
+    <title>
+      
+      
+         Neovim as a markdown editor 
+      
+    </title>
+    <link rel="canonical" href="http://localhost:1313/posts/pub-neovim-for-markdown/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin: 0;
+    color: black;
+    text-decoration-skip: ink;
+  }
+
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size:28px;
+    line-height:100%;
+    color:#1d1313;
+    max-width:750px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 25px auto 25px auto;
+    max-width: 90%;
+    display: block;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  }
+
+  .left-justify { float: left; }
+  .right-justify { float:right; }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 75%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Times New Roman", Times, serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Times New Roman", Times, serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Times New Roman", Times, serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:25px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:35px;
+  }
+
+  #sub-header, .date {
+    color:#403c3b;
+    font-size:14px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  .posts_listing li {
+    list-style-type: none;
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:17px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:28px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content .date {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:33px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:30px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 0px auto 0px auto;
+    padding: 0;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:22px;
+    padding: 0 20px;
+  }
+
+  #links {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(1) {
+    margin-right:0.5em;;
+  }
+
+  #links :nth-child(2) {
+    margin-left:0.5em;;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    *, #nav h1 a {
+      color: #FDFDFD;
+    }
+
+    body {
+      background: #121212;
+    }
+
+    pre, code {
+      background-color: #262626;
+    }
+
+    #sub-header, .date {
+      color: #BABABA;
+    }
+
+    hr {
+      background: #EBEBEB;
+    }
+  }
+</style>
+
+
+    </head>
+
+  <body>
+    <section id=nav>
+      
+      <ul>
+        
+          <li><a href="/">HOME</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> Neovim as a markdown editor </h1>
+
+  
+    <div id=sub-header>
+      February 2024
+    </div>
+  
+
+  <div class="entry-content">
+    <!-- raw HTML omitted -->
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#goals">Goals</a></li>
+<li><a href="#synchronization">Synchronization</a></li>
+<li><a href="#syntax-highlights-and-conceals">Syntax highlights and conceals</a></li>
+<li><a href="#better-spell-checker">Better spell checker</a></li>
+<li><a href="#navigation">Navigation</a></li>
+<li><a href="#snippets">Snippets</a></li>
+<li><a href="#render-images-in-editor">Render images in editor</a></li>
+<li><a href="#viewing-rendered-document">Viewing rendered document</a></li>
+<li><a href="#a-bit-about-performance">A bit about performance</a></li>
+<li><a href="#things-to-improve">Things to improve</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<h2 id="introduction">Introduction</h2>
+<p>I am a Neovim user for 2 years. I&rsquo;m also keyboard oriented user since then. Furthermore, I&rsquo;ve built my working environment all around neovim as a core. I&rsquo;m using DAP within Neovim to debug Python code, I&rsquo;m writing drafts in Neovim for work-related tasks, and I&rsquo;m using Neovim side by side in my terminal with shell session. I have a shortcut to access the terminal with an open Neovim instance.</p>
+<p>This week I&rsquo;ve decided to write notes and longer posts about my life and work. Markdown seems like the best option for a text formatting system everyone knows and everyone understands both people and tools. Even unrendered markdown is pretty much readable. So I take it.</p>
+<p>For a moment I was considering a specialized editor for that, like <em>Obsidian</em> or even <em>Evernote</em>. That&rsquo;s because I knew Neovim should be configured properly for a comfortable writing experience. At that point, I wanted to <em>just write formatted notes</em>.</p>
+<p><strong>Evernote</strong> seems like a mature future-proof engine for any kind of note. It has it all, not only text editor:</p>
+<ul>
+<li>Contains an integrated calendar and AI assistant;</li>
+<li>Has collaboration features;</li>
+<li>Can be paired with web clipper;</li>
+<li>Has integrations with many apps;</li>
+<li>Has synchronization, backups, and many more features;</li>
+</ul>
+<p>As soon as I started digging into it, I understood that Evernote was not for me. Too complicated. So many features I don&rsquo;t want. Product lock-in.</p>
+<p><strong>Obsidian</strong> is a nice choice for sure for most users:</p>
+<ul>
+<li>Markdown compatible;</li>
+<li>You own your data;</li>
+<li>You can use whatever tool for sync and backup;</li>
+<li>It&rsquo;s just an interface for changing and searching your notes;</li>
+<li>It even has built-in vim mode.</li>
+</ul>
+<p>However, I realized I wanted a system that feels similar to the Personal Development Environment I use Neovim for. Like, I want to be at home when I write about things I&rsquo;m interested in. I also don&rsquo;t want to overload myself with features.</p>
+<p>So I decided to use tools I&rsquo;m already familiar with: File-based structure, Git for sync, Neovim for editing, and browser for rendering (via Neovim plugin).</p>
+<h2 id="goals">Goals</h2>
+<p>After some research and reflections, I&rsquo;ve formed what I want from the system:</p>
+<ul>
+<li>simple, obvious</li>
+<li>quickly reachable</li>
+<li>easy to use</li>
+<li>limitations (less is more)</li>
+<li>synchronization</li>
+<li>possibility to customize (I want my shortcuts, I want to disable unwanted things)</li>
+<li>portable, no lock-ins</li>
+</ul>
+<p>This is when I feel the note-taking system is beautiful.</p>
+<h2 id="synchronization">Synchronization</h2>
+<p>I use a file system to categorize my notes. It allows me to use Git for synchronization. I pretty much acknowledged of Git, I&rsquo;ve configured tools around it, and I&rsquo;m ready to use it. It also makes synchronization cost free, because I only need a private repo in GitHub.</p>
+<h2 id="syntax-highlights-and-conceals">Syntax highlights and conceals</h2>
+<p>Markdown syntax highlighting in Neovim is provided by <a href="https://github.com/nvim-treesitter/nvim-treesitter">Neovim treesitter engine</a> and <a href="https://github.com/tree-sitter-grammars/tree-sitter-markdown">markdown treesitter plugin</a>. All you need is to add <strong>markdown</strong> and <strong>markdown_inline</strong> parsers to the treesitter configuration.</p>
+<p>The thing that bothers me in the process of creating markdown notes in a simple text editor is syntax artifacts all around. Most pain I feel by adding a link to the block of text. Link syntax creates so much noise. Fortunately, there&rsquo;s a solution. Neovim (as well as Vim) provides <a href="https://neovim.io/doc/user/options.html#'conceallevel'">text concealing</a> as a core feature, which means we can hide format syntax and show it only when the cursor is placed on the line.</p>
+<p>All you need is to enable conceals in the Neovim config: <code>vim.opt.conceallevel = 2</code></p>
+<p>Treesitter provides nice concealing for most Markdown syntax:</p>
+<ul>
+<li>link</li>
+<li>image</li>
+<li>text style processing: bold, italic, strikethrough</li>
+<li>code</li>
+<li>footnote</li>
+</ul>
+<p>How it looks:
+<img src="/images/conceals.png" alt="Conceals example"></p>
+<h2 id="better-spell-checker">Better spell checker</h2>
+<p><a href="https://languagetool.org/">LanguageTool</a>
+is a grammar tool and spell checker with an open-source core. I&rsquo;m using the free tier and considering upgrading to a paid plan because I would like to improve my writing in English. LanguageTool can be used inside Neovim as a Language Server with <a href="https://github.com/valentjn/ltex-ls">ltex-ls</a> plugin. Implementation has some limitations. You can&rsquo;t:</p>
+<ul>
+<li>add a new word to the dictionary</li>
+<li>hide false positive</li>
+<li>disable rule</li>
+</ul>
+<p>But you are still able to fix grammar and spelling.</p>
+<p>Inability to add a new word to the dictionary bothered me. So I decided to glue <a href="https://neovim.io/doc/user/spell.html">Vim&rsquo;s spell feature</a> and LanguageTool LSP. Here&rsquo;s how I did that:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">local</span> <span style="color:#000">spell_words</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">word</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">io.open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">vim.fn</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">stdpath</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;config&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">..</span> <span style="color:#4e9a06">&#34;/spell/en.utf-8.add&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;r&#34;</span><span style="color:#000;font-weight:bold">):</span><span style="color:#000">lines</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">table.insert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">spell_words</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">word</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>                                                                                       
+</span></span><span style="display:flex;"><span><span style="color:#000">lsp_config.ltex</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">setup</span><span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">settings</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000">ltex</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">language</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;en-US&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">enabled</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000">dictionary</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#34;en-US&#34;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">spell_words</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#000;font-weight:bold">},</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#000;font-weight:bold">},</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000;font-weight:bold">},</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>
+</span></span></code></pre></div><p>We can add new words with the &ldquo;<a href="https://neovim.io/doc/user/spell.html#zg">zg</a>&rdquo; shortcut executed in normal mode when the cursor is placed on the file.</p>
+<p>The block of code collects all added words from the spellfile and propagates words as part of the dictionary for ltex LSP. The only downside is that you need to restart Neovim to see changes.</p>
+<dl>
+<dt>Note about path and name conventions</dt>
+<dd>Vim searches for spell files in the &ldquo;spell&rdquo; subdirectory in the config path. The name format of the spell file must be LL.EEE.add, where
+<ul>
+<li>LL the language name</li>
+<li>EEE	the value of &rsquo;encoding'</li>
+</ul>
+</dd>
+</dl>
+<h2 id="navigation">Navigation</h2>
+<p><a href="https://github.com/artempyanykh/marksman/">Marksman LSP</a> is a great companion for writing in Markdown. I find it useful for:</p>
+<ul>
+<li>Document symbols from headings, so I can find and navigate through headings easily;</li>
+<li>Completion for links, even links to the different files;</li>
+<li>&ldquo;Go to definition&rdquo; for links, so I can jump everywhere, even in other files;</li>
+<li>Rename, so I can update the header name in all places it was referenced;</li>
+<li>Generate a table of contents.</li>
+</ul>
+<p>You can find more features (and plans too) in <a href="https://github.com/artempyanykh/marksman/blob/main/docs/features.md">Marksman&rsquo;s docs</a>.</p>
+<p>This is how I search headings with Marksman and Telescope:
+<img src="/images/navogation.png" alt="Navigation example"></p>
+<h2 id="snippets">Snippets</h2>
+<p>Writing Markdown without snippets is hard. Especially if you like to add a bunch of images and links. Snippets allow me to write faster using fewer keystrokes. I use <a href="https://github.com/L3MON4D3/LuaSnip/">LuaSnip</a> as a snippet engine, and <a href="https://github.com/saadparwaiz1/cmp_luasnip">cmp_luasnip</a> for autocomplete integration with <a href="https://github.com/hrsh7th/nvim-cmp">autocompletion engine</a>. LuaSnip documentation suggests to use predefined snippets from various sources (<a href="https://github.com/honza/vim-snippets/tree/master/snippets">1</a>, <a href="https://github.com/rafamadriz/friendly-snippets/tree/main/snippets">2</a>) or write your own. For the latter, you have two choices:</p>
+<ul>
+<li>use SnipMate/VS Code snippets (easier)</li>
+<li>write snippets in Lua (more complex but also more feature-rich).</li>
+</ul>
+<p>As I needed a few simple snippets, I decided to copy some existing ones from <a href="https://github.com/honza/vim-snippets/blob/master/snippets/markdown.snippets">here</a>.</p>
+<p>What I have so far:</p>
+<pre tabindex="0"><code># The suffix `c` stands for &#34;Clipboard&#34;.
+
+# LINKS
+snippet [
+	[${1:text}](https://${2:address})
+
+## url from clipboard
+snippet [c
+	[${1:link}](${2:`@+`})
+
+
+# FRONTMATTER (for metadata)
+snippet -- Front matter
+	---
+	$0
+	---
+
+
+# TODO
+snippet xx
+	- [ ] ${1:todo}
+
+
+# IMAGES
+snippet ![
+	![${1:alttext}](${2:/images/image.jpg})
+
+snippet ![c
+	![${1:alt}](${2:`@+`})
+
+
+# CODE
+snippet ```l
+	\`\`\`${1:language}
+	${2:code}
+	\`\`\`
+
+
+# TABLE
+snippet tb
+	|  ${0:factors}      |    ${1:a}       |  ${2:b}   	|
+	| ------------- |-------------  | ------- |
+	|    ${3:f1}    |    Y          | N       |
+	|    ${4:f2}    |    Y          | N       |
+
+
+# DEFITION LIST
+snippet : Definition list
+	$1
+	: $0
+
+snippet :: Alternate definition list
+	$1
+	  - $0
+</code></pre><p>It&rsquo;s not much, but have everything I need and doesn&rsquo;t overfill my autocompletion pop-up with suggestions.</p>
+<h2 id="render-images-in-editor">Render images in editor</h2>
+<p><em>Promising start, unfortunate end.</em></p>
+<p>Aside from text, I would like to have images in my posts. Images add fun, create associations, and make the post rich. Adding images in Markdown is as easy as adding links. You can also add height and width for images.</p>
+<p>Still, you have to render documents, to view images. I wanted to go deeper and preview images while I was typing text, right in the Neovim. I also wanted to add images from the clipboard easily. With Kitty graphic protocol and a few neovim plugins, we can achieve it.</p>
+<p><a href="https://sw.kovidgoyal.net/kitty/graphics-protocol/">Kitty&rsquo;s terminal graphic protocol</a> creates a flexible and performant protocol that allows the program running in the terminal to render arbitrary pixel (raster) graphics to the screen of the terminal emulator. Which basically means we can view images in the editor.</p>
+<p>By the way, <a href="https://github.com/wez/wezterm/issues/986">WezTerm</a>, <a href="https://invent.kde.org/utilities/konsole/-/merge_requests/594">Konsole</a>, and <a href="https://github.com/91861/wayst">wayst</a> terminal emulators have implemented kitty&rsquo;s graphic protocol as well.</p>
+<p>Then we need plugins:</p>
+<ul>
+<li><a href="https://github.com/3rd/image.nvim">image.nvim</a> for image rendering in Neovim buffer;</li>
+<li><a href="https://github.com/HakonHarnes/img-clip.nvim">img-clip.nvim</a> for pasting images from clipboard.</li>
+</ul>
+<p>Everything was fine until I started to write long sentences and Neovim started to wrap my text. The image plugin (image.nvim) can&rsquo;t measure the rendered height of a buffer section.</p>
+<p>So if you have wrapped text, your placed images in the text start to look like this:
+<img src="/images/image-render-with-wrapped-text.png" alt="Image rendering with wrapped text">
+<a href="https://github.com/3rd/image.nvim/issues/116">There&rsquo;s an issue on the plugin&rsquo;s GitHub page</a>, but it can&rsquo;t be fixed on the plugin side because of Neovim limitations. This was a dealbreaker for me, so I decided to drop the image rendering feature within the editor.</p>
+<h2 id="viewing-rendered-document">Viewing rendered document</h2>
+<p>For this part, I&rsquo;ve decided to go simple. I use popular Vim/Neovim plugin <a href="https://github.com/iamcco/markdown-preview.nvim">markdown-preview</a> to convert Markdown into HTML and view the result in the browser with <code>:MarkdownPreview</code> command. My typical writing experience is based on a split fullscreen containing terminal+Neovim and browser tab with converted and rendered Markdown.</p>
+<p><img src="/images/2024-03-10-10-56-45.png" alt="Showcase-writing"></p>
+<p>Simple, yet powerful.</p>
+<h2 id="a-bit-about-performance">A bit about performance</h2>
+<p>By installing plugins we&rsquo;re increasing Neovim startup time. This is how big the overhead is for cold start opening Markdown file. Need to say startup time is a bit different in every measure, but I can say the increase is in the <strong>200-300ms</strong> range.</p>
+<pre tabindex="0"><code>Command: nvim --startuptime
+
+@:~$ cat startuptime-markdown-file.log | tail -n 2
+649.335  000.004: --- NVIM STARTED ---
+
+@:~$ cat startuptime.log | tail -n 2
+407.371  000.001: --- NVIM STARTED ---
+</code></pre><h2 id="things-to-improve">Things to improve</h2>
+<p>I still have some caveats with the Markdown text environment. It&rsquo;s not ideal and has a room to improve.</p>
+<p>For example, I would like to manipulate lists in a better way. Being in the list and pressing Enter <strong>twice</strong> should automatically create a new list item on a new line and then delete it. I know Markdown plugins provide something similar, but they don&rsquo;t work as expected. Maybe one day I will write simple automation by myself.</p>
+<p>I also would like to integrate AI to assist with editing and rephrasing because, as you may already have noticed, my English is not good enough to write nice texts.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this article, I&rsquo;ve shared personal thoughts about preferences and choices for the note-taking system and showed the writing environment I&rsquo;ve come to. I hope someone will find it helpful. Thank you all.</p>
+
+  </div>
+
+  <div id=links>
+    
+    
+  </div>
+</section>
+
+</body>
+</html>
+
+
+
