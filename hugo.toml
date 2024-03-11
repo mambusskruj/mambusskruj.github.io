@@ -2,17 +2,9 @@ baseURL = 'https://mambusskruj.github.io/'
 languageCode = 'en-us'
 title = 'Home'
 languagecode = "en"
-# theme = 'black-and-light-modified'
 
 pygmentsstyle = "tango"
 pygmentscodefences = true
-
-# assetDir = "static"
-
-# [module]
-# [[module.mounts]]
-#     source = 'content'
-#     target = 'content'
 
 [params]
   sitename = "Home"

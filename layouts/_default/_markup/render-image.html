@@ -1,7 +1,7 @@
 {{- /* From here https://pixelswap.fr/entry/how-to-optimize-image-rendering-with-hugo */ -}}
 
 
-{{- $image := .Page.Resources.GetMatch .Destination -}}
+{{- $image := resources.Get .Destination -}}
 
 {{- /* The following is is used as a fallback if the image is not found or if it's a GIF. */ -}}
 {{- $default := printf "<img src=\"%s\"alt=\"%s\" title=\"%s\" />" (.Destination | safeURL) $.PlainText $.Title -}}

@@ -1,7 +1,7 @@
 #!/usr/local/bin/bash
 
 BRAIN_PATH="$HOME/second-brain"
-IMG_STORE="$HOME/public-brain/static/images"
+IMG_STORE="$HOME/public-brain/assets/images"
 IMG_STORE_NAME="/images"
 
 find $BRAIN_PATH -type f -name "pub-*.md" -exec cp {} ~/public-brain/content/posts/ \;
