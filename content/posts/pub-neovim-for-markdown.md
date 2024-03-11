@@ -1,7 +1,7 @@
 ---
 title: 'Neovim as a markdown editor'
 date: 2024-02-11
-draft: true
+draft: false
 ---
 
 <!--toc:start-->
