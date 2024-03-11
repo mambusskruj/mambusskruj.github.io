@@ -1,5 +1,6 @@
 ---
 title: 'Neovim as a markdown editor'
+description: 'Using Neovim as a markdown editor'
 date: 2024-02-11
 draft: false
 ---
@@ -142,7 +143,7 @@ Writing Markdown without snippets is hard. Especially if you like to add a bunch
 - use SnipMate/VS Code snippets (easier)
 - write snippets in Lua (more complex but also more feature-rich). 
 
-As I needed a few simple snippets, I decided to copy some existing ones from [here](https://github.com/honza/vim-snippets/blob/master/snippets/markdown.snippets).
+As I needed a few simple snippets, I decided to copy some existing ones from [honza's markdown snippets](https://github.com/honza/vim-snippets/blob/master/snippets/markdown.snippets).
 
 What I have so far:
 
