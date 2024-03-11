@@ -1,13 +1,11 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://mambusskruj.github.io/'
 languageCode = 'en-us'
 title = 'Home'
 languagecode = "en"
-# theme = 'xmin'
-# theme = 'hugo-bearblog'
 theme = 'black-and-light'
 
-pygmentsstyle       = "tango"
-pygmentscodefences  = true
+pygmentsstyle = "tango"
+pygmentscodefences = true
 
 [module]
 [[module.mounts]]
