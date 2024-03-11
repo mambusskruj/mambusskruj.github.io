@@ -94,7 +94,7 @@ But you are still able to fix grammar and spelling.
 
 Inability to add a new word to the dictionary bothered me. So I decided to glue [Vim's spell feature](https://neovim.io/doc/user/spell.html) and LanguageTool LSP. Here's how I did that:
 
-```lua
+```
 local spell_words = {}
 for word in io.open(vim.fn.stdpath("config") .. "/spell/en.utf-8.add", "r"):lines() do
 	table.insert(spell_words, word)
