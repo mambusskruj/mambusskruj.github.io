@@ -16,14 +16,18 @@
         {{- $sizestag := slice -}}
         {{- range $sizes -}}
             {{- if lt (mul . 1.2) $imageOriginalWidth -}}
-                {{- $thumb := $image.Resize (printf "%dx webp q100" .) -}}
+                <!-- If you want to compress the image -->
+                <!-- {{- $thumb := $image.Resize (printf "%dx webp q100" .) -}} -->
+                {{- $thumb := $image.Process "webp" -}}
                 {{- $srcset = $srcset | append (printf ("%s %dw") $thumb.RelPermalink . ) -}}
                 {{- $sizestag = $sizestag | append (printf ("(max-width: %dpx) 100vw") . ) -}}
             {{- end -}}
         {{- end -}}
 
         {{- if ne (len $srcset) 3 -}}
-            {{- $thumb := $image.Resize (printf "%dx webp q100" $imageOriginalWidth) -}}
+            <!-- If you want to compress the image -->
+            <!-- {{- $thumb := $image.Resize (printf "%dx webp q100" $imageOriginalWidth) -}} -->
+            {{- $thumb := $image.Process "webp" -}}
             {{- $srcset = $srcset | append (printf ("%s %dw") $thumb.RelPermalink $imageOriginalWidth ) -}}
             {{- $sizestag = $sizestag | append (printf ("%dpx") $imageOriginalWidth ) -}}
         {{- end -}}
