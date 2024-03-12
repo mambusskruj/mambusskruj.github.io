@@ -28,6 +28,9 @@
     {{ range .AlternativeOutputFormats -}}
         {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
     {{ end -}}
+
+    <!-- simple open sourced analytics -->
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="9f9a325b-de58-46ca-9553-d59b2b600dd2"></script>
   </head>
 
   <body>
